@@ -28,6 +28,17 @@
              border-color: #a5b4fc; /* indigo-300 */
              font-weight: 600; /* semibold */
         }
+         .filter-section-btn { /* Base styles for section buttons */
+             cursor: pointer;
+             transition: all 0.2s ease-in-out;
+             border: 1px solid transparent; /* Add a border for consistency */
+         }
+         .filter-section-btn:hover:not(.selected) {
+              background-color: #e0e7ff; /* indigo-100 */
+              color: #4338ca; /* indigo-800 */
+         }
+
+
         /* Simple animation for experience items */
         .experience-item {
             animation: fadeIn 0.5s ease-out;
@@ -74,13 +85,16 @@
             <div class="mt-4 space-x-4">
                 <a href="tel:+15198028108" class="text-indigo-500 hover:text-indigo-700"><i class="fas fa-phone"></i> +1 519-802-8108</a>
                 <a href="mailto:pmmarvyn@gmail.com" class="text-indigo-500 hover:text-indigo-700"><i class="fas fa-envelope"></i> pmmarvyn@gmail.com</a>
-                </div>
+                <a href="https://github.com/pmmarvyn" class="text-indigo-500 hover:text-indigo-700" aria-label="GitHub Profile"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/pmmarvyn/" class="text-indigo-500 hover:text-indigo-700" aria-label="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
+                 <a href="https://www.kaggle.com/bulkiestmist" class="text-indigo-500 hover:text-indigo-700" aria-label="Kaggle Profile"><i class="fab fa-kaggle"></i></a>
+            </div>
         </header>
 
         <section class="bg-white p-6 rounded-lg shadow-md mb-8">
             <h2 class="text-2xl font-semibold mb-4 border-b pb-3 text-indigo-600">Profile</h2>
             <p class="text-gray-700 leading-relaxed">
-                Data Guru specializing in Python with a background in quantitative science. I'm passionate about new technologies, machine learning, AI and human health. Seeking opportunities to further my career in Data Engineering.
+                Data Guru specializing in Python with a background in quantitative science. I use OpenAI and Gemini API's daily for coding, data extraction and generation. I'm passionate about new technologies, machine learning, AI and human health. Seeking opportunities to further my career in Data Engineering.
             </p>
         </section>
         <div class="flex flex-col md:flex-row gap-8">
@@ -90,22 +104,22 @@
                     <h2 class="text-xl font-semibold mb-4 border-b pb-2">Filters</h2>
 
                     <div class="mb-6">
-                         <h3 class="text-lg font-medium text-gray-800 mb-3">Show Sections</h3>
+                         <h3 class="text-lg font-medium text-gray-800 mb-3">Show Section</h3>
                          <div id="section-filters" class="flex flex-wrap gap-2">
-                             <button class="filter-section-btn bg-gray-200 text-gray-700 text-sm font-medium px-3 py-1 rounded-full hover:bg-indigo-100 hover:text-indigo-800 selected" data-section="all">All</button>
-                             <button class="filter-section-btn bg-gray-200 text-gray-700 text-sm font-medium px-3 py-1 rounded-full hover:bg-indigo-100 hover:text-indigo-800" data-section="work">Work</button>
-                             <button class="filter-section-btn bg-gray-200 text-gray-700 text-sm font-medium px-3 py-1 rounded-full hover:bg-indigo-100 hover:text-indigo-800" data-section="education">Education</button>
-                             <button class="filter-section-btn bg-gray-200 text-gray-700 text-sm font-medium px-3 py-1 rounded-full hover:bg-indigo-100 hover:text-indigo-800" data-section="publications">Publications</button>
+                             <button class="filter-section-btn bg-gray-200 text-gray-700 text-sm font-medium px-3 py-1 rounded-full selected" data-section="all">All</button>
+                             <button class="filter-section-btn bg-gray-200 text-gray-700 text-sm font-medium px-3 py-1 rounded-full" data-section="work">Work</button>
+                             <button class="filter-section-btn bg-gray-200 text-gray-700 text-sm font-medium px-3 py-1 rounded-full" data-section="education">Education</button>
+                             <button class="filter-section-btn bg-gray-200 text-gray-700 text-sm font-medium px-3 py-1 rounded-full" data-section="publications">Publications</button>
                          </div>
                     </div>
 
                     <div id="work-experience-filters"> <div class="mb-6">
-                            <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">Search Work Experience</label>
+                            <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">Search Work Experience/Projects</label>
                             <input type="text" id="search-input" placeholder="Search keywords..." class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
                         </div>
 
                         <div>
-                            <h3 class="text-lg font-medium text-gray-800 mb-3">Filter Work Experience by Tag (OR logic)</h3>
+                            <h3 class="text-lg font-medium text-gray-800 mb-3">Filter Related Projects by Tag</h3>
                             <div id="tag-filters" class="flex flex-wrap gap-2">
                                 <span class="text-gray-500 text-sm">Loading tags...</span>
                             </div>
@@ -119,7 +133,7 @@
                 <section id="work-experience-section" class="bg-white p-6 rounded-lg shadow-md mb-8">
                     <h2 class="text-2xl font-semibold mb-6 border-b pb-3 text-indigo-600">Work Experience</h2>
                     <div id="experience-list" class="space-y-6">
-                        <p id="no-results-message" class="text-center text-gray-500 hidden">No work experiences match the current filters.</p>
+                        <p id="no-results-message" class="text-center text-gray-500 hidden">No work experiences or projects match the current filters.</p>
                     </div>
                 </section>
 
@@ -127,7 +141,7 @@
                     <h2 class="text-2xl font-semibold mb-4 border-b pb-3 text-indigo-600">Education</h2>
                     <div class="space-y-4">
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-900">PhD – Biochemistry/CAR-T cells</h3>
+                            <h3 class="text-lg font-semibold text-gray-900">PhD – Biochemistry - Protein Engineering for CAR-T cells</h3>
                             <p class="text-md text-indigo-700">McMaster University</p>
                             <p class="text-sm text-gray-500">2016 - 2021</p>
                         </div>
@@ -155,10 +169,6 @@
                         <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Prompt Engineering</span>
                         <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Automation</span>
                         <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Web Scraping</span>
-                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Data Cleaning</span>
-                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Data Quality</span>
-                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Database Design</span>
-                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">SQL</span>
                         <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Google Colab</span>
                         <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Google Sheets API</span>
                         <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Chrome Extensions</span>
@@ -170,21 +180,20 @@
                         <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Data Governance</span>
                         <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Scientific Research</span>
                         <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Biochemistry</span>
-                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Healthcare</span>
                         </div>
                 </section>
 
                 <section class="bg-white p-6 rounded-lg shadow-md mb-8">
                     <h2 class="text-2xl font-semibold mb-4 border-b pb-3 text-indigo-600">Interests</h2>
                     <div class="flex flex-wrap gap-2">
-                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">Mentoring/Teaching</span>
-                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">LLM Technologies</span>
-                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">Bioinformatics</span>
-                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">Single cell RNA Seq</span>
-                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">Proteomics</span>
-                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">3D Modeling/Printing</span>
-                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">Hiking</span>
-                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">Camping</span>
+                         <span class="bg-gray-100 text-gray-500 text-sm font-medium px-3 py-1 rounded-full">Mentoring/Teaching</span>
+                         <span class="bg-gray-100 text-gray-500 text-sm font-medium px-3 py-1 rounded-full">LLM Technologies</span>
+                         <span class="bg-gray-100 text-gray-500 text-sm font-medium px-3 py-1 rounded-full">Bioinformatics</span>
+                         <span class="bg-gray-100 text-gray-500 text-sm font-medium px-3 py-1 rounded-full">Single cell RNA Seq</span>
+                         <span class="bg-gray-100 text-gray-500 text-sm font-medium px-3 py-1 rounded-full">Proteomics</span>
+                         <span class="bg-gray-100 text-gray-500 text-sm font-medium px-3 py-1 rounded-full">3D Modeling/Printing</span>
+                         <span class="bg-gray-100 text-gray-500 text-sm font-medium px-3 py-1 rounded-full">Hiking</span>
+                         <span class="bg-gray-100 text-gray-500 text-sm font-medium px-3 py-1 rounded-full">Camping</span>
                     </div>
                 </section>
 
@@ -194,6 +203,7 @@
                         <li>Marvyn PM, Bramson J. Chimeric costimulatory receptors and methods and uses thereof. International Patent Number WO2021051195A1. September 16, 2020.</li>
                         <li>Fernandes MF, Aristizabal-Henao JJ, Marvyn PM, M’Hiri I, Wiens M, Hoang M, Sebastian M, Nachbar R, St-Pierre P, De Silva K, Wood GA, Joseph JW, Doucette CA; Marette A, Stark KD, Duncan RE. Renal tubule specific Atgl deletion links kidney fat metabolism to glucagon-like peptide 1 and insulin secretion independent of renal inflammation or lipotoxicity. Molecular Metabolism. January 24, 2024.</li>
                         <li>Bradley RM, Mardian EB, Bloemberg D, Aristizabal Henao JJ, Mitchell AS, Marvyn PM, Moes KA, Stark KD, Quadrilatero J, Duncan RE. Mice Deficient in lysophosphatidic acid acyltransferase delta (Lpaatδ)/acylglycerophosphate acyltransferase 4 (Agpat4) Have Impaired Learning and Memory. Molecular Cell Biology. October 27, 2017.</li>
+                      <li><a href="https://pubmed.ncbi.nlm.nih.gov/?term=marvyn+pm">All Publications</a></li>
                     </ul>
                 </section>
 
@@ -203,31 +213,77 @@
 
     <script>
         // --- Resume Data ---
-        // Array of experience objects. Updated with Phillip Marvyn's data.
+        // Array of experience objects. Updated with Phillip Marvyn's data and added projects.
         const experiences = [
             {
-                title: 'Senior Data Manager @Zebricks', // Assuming @Zebricks is part of the title or a sub-team
+                title: 'Senior Data Manager @Zebricks',
                 company: 'Lumerate',
-                location: 'Hamilton, ON (Assumed)', // Added assumed location based on context
+                location: 'Remote',
                 years: 'March 2025 – Present',
                 description: 'Led and mentored 4 data analysts, fostering a collaborative and high-performing environment. Defined team objectives, set performance expectations, and conducted regular performance reviews to ensure alignment with organizational goals. Recruited, onboarded, and trained new data team members, building a skilled and efficient workforce. Facilitated cross-functional collaboration with engineering, product, and business teams to ensure data-driven decision-making. Implemented best practices for data governance, quality, and documentation across the data team. Drove the adoption of new data technologies and methodologies to enhance data capabilities and efficiency.',
-                tags: ['Leadership', 'Mentorship', 'Management', 'Hiring', 'Training', 'Collaboration', 'Data Governance', 'Data Quality', 'Strategy', 'Team Building', 'Performance Management']
+                tags: ['Management', 'Hiring', 'Training', 'Collaboration'],
+                projects: [ // Projects for this role
+                    {
+                        title: 'KPI Management',
+                        description: 'Designed and implemented KPI's enabling data-driven performance evaluation and resource allocation.',
+                        tags: ['KPIs', 'Reporting', 'Project Management']
+                    },
+                    {
+                        title: 'Data Team Hiring',
+                        description: 'Experience with Breezy for candidate review, tracking and collaboration with HR Team',
+                        tags: ['Breezy', 'Hiring', 'Management', 'Collaboration']
+                    }
+                ]
             },
             {
                 title: 'Data Analyst',
                 company: 'Lumerate',
-                location: 'Hamilton, ON (Assumed)', // Added assumed location based on context
+                location: 'Remote',
                 years: 'March 2023 – March 2025',
                 description: 'As the primary data specialist on a new development project, I mentored and supported new data team members, providing guidance and feedback on their projects. Developed semi-automated Python scripts for news publishing, integrating third-party software, Google Sheets, and internal tools. Reduced task time 80%, from 80 hours/week to 10 hours/week. Developed and optimized LLM prompts for extracting data, summarizing key information, and classifying text, utilizing Jinja2 templates to streamline data input. Leveraged the OpenAI API for bulk processing of files, streamlining data extraction, generation, manipulation, and formatting. Took the initiative to identify and alleviate team member pain points by developing Chrome extensions to automate and streamline workflows, saving 30 minutes per day per team member. Developed Python scripts in Google Colab to extract and process data from multiple web sources, including handling and analyzing PDF documents. Performed data scraping, cleaning, and quality assurance to maintain a high-quality organizational database.',
-                tags: ['Python', 'Automation', 'Google Sheets API', 'LLM', 'Prompt Engineering', 'OpenAI API', 'Jinja2', 'Chrome Extension', 'Web Scraping', 'PDF Processing', 'Data Cleaning', 'Data Quality', 'Mentorship', 'Google Colab', 'Data Extraction', 'Data Manipulation']
+                tags: ['Python', 'Automation', 'Google Sheets API', 'LLM', 'Prompt Engineering', 'OpenAI API', 'Jinja2', 'Chrome Extension', 'Web Scraping', 'PDF Processing', 'Data Cleaning', 'Data Quality', 'Mentorship', 'Google Colab', 'Data Extraction', 'Data Manipulation'],
+                projects: [ // Projects for this role
+                    {
+                        title: 'Automated News Publishing System',
+                        description: 'Developed Python scripts to automate the extraction, processing, and publishing of news content from various web sources by integrating with various third-party apps and API's, Google Sheets API's, and internal publishing platforms, resulting in an 87% reduction in manual effort from 80 hrs/wk to 10hrs/wk',
+                        tags: ['Python', 'Automation', 'API Integration', 'Google Sheets API', 'Web Scraping', 'Data Processing', 'Selenium', 'Workflow Optimization']
+                    },
+                    {
+                        title: 'LLM-Powered Data Extraction and Classification',
+                        description: 'Designed and fine-tuned LLM prompts using Jinja2 templates and the OpenAI API for efficient extraction of structured data, summarization of key information, and classification of text documents from diverse sources.',
+                        tags: ['LLM', 'Prompt Engineering', 'OpenAI API', 'Gemini API', 'Jinja2', 'Data Extraction', 'Text Classification']
+                    },
+                     {
+                        title: 'Workflow Streamlining Chrome Extensions',
+                        description: 'Identified repetitive tasks and developed custom Chrome extensions to automate browser-based workflows for the team, saving approximately 30 minutes per team member per day and improving overall efficiency.',
+                        tags: ['Chrome Extension', 'Automation', 'JavaScript', 'Workflow Optimization']
+                    },
+                     {
+                        title: 'Web Data Extraction and PDF Analysis Pipeline',
+                        description: 'Created Python scripts within Google Colab to systematically extract data from multiple web sources and process information embedded within PDF documents using OpenAI API with Pydantic Schema's, establishing a robust pipeline for data acquisition and analysis.',
+                        tags: ['Python', 'Google Colab', 'Web Scraping', 'PDF Processing', 'Data Extraction', 'Data Analysis', 'Pydantic']
+                    }
+                ]
             },
             {
                 title: 'Data Analyst',
                 company: 'Alvea Bio',
-                location: 'Remote/Unknown', // Location not specified
+                location: 'Remote',
                 years: 'Jan 2022 – Jan 2023',
                 description: 'Designed and implemented databases to support vaccine development efforts, enabling quick identification of vaccine formulations, dosing strategies, technologies, trial status, and regulatory approvals. Provided expert advice on scientific and technological developments in vaccine research. Conducted ad-hoc research on diverse topics, ranging from vaccine formulations to document submissions.',
-                tags: ['Database Design', 'SQL', 'Vaccine Development', 'Healthcare', 'Biotech', 'Research', 'Scientific Analysis', 'Data Management', 'Regulatory Affairs']
+                tags: ['Database Design', 'SQL', 'Vaccine Development', 'Healthcare', 'Biotech', 'Research', 'Scientific Analysis', 'Data Management', 'Regulatory Affairs'],
+                projects: [ // Projects for this role
+                    {
+                        title: 'Vaccine Development Database System',
+                        description: 'Designed and built a relational database to track and manage critical data related to vaccine development, including formulations, clinical trial progress, regulatory submissions, and technological approaches, facilitating efficient data retrieval and analysis.',
+                        tags: ['Database Design', 'SQL', 'Data Management', 'Healthcare', 'Biotech']
+                    },
+                     {
+                        title: 'Scientific Literature Review and Synthesis',
+                        description: 'Conducted in-depth research and synthesized findings from scientific literature on emerging vaccine technologies and development strategies to inform internal decision-making and provide expert scientific advice.',
+                        tags: ['Scientific Research', 'Research', 'Biotech', 'Healthcare', 'Analysis']
+                    }
+                ]
             }
         ];
 
@@ -246,18 +302,30 @@
         // --- State ---
         let selectedTags = new Set(); // Use a Set for efficient add/delete/check
         let searchTerm = '';
-        // Initialize to show all sections
-        let selectedSections = new Set(['all', 'work', 'education', 'publications']);
+        // Initialize to show all sections (mutual exclusion means only one "state" is active)
+        let selectedSection = 'all'; // Can be 'all', 'work', 'education', or 'publications'
 
 
         // --- Functions ---
 
         /**
-         * Extracts unique tags from the experiences data.
+         * Extracts unique tags from the experiences (main tags and project tags) data.
          * @returns {string[]} An array of unique tags, sorted alphabetically.
          */
         function getUniqueTags() {
-            const allTags = experiences.flatMap(exp => exp.tags);
+            const allTags = experiences.flatMap(exp => {
+                // Collect tags from the main experience
+                let tags = exp.tags || [];
+                // Collect tags from each project within the experience
+                if (exp.projects) {
+                    exp.projects.forEach(project => {
+                        if (project.tags) {
+                            tags = tags.concat(project.tags);
+                        }
+                    });
+                }
+                return tags;
+            });
             // Added case-insensitive sorting
             return [...new Set(allTags)].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
         }
@@ -316,173 +384,229 @@
         }
 
         /**
-         * Handles clicking on a section filter button. Toggles section visibility.
+         * Handles clicking on a section filter button. Switches section visibility (mutually exclusive).
          * @param {Event} event - The click event object.
          */
         function handleSectionClick(event) {
             const button = event.target;
-            const section = button.dataset.section;
+            const section = button.dataset.section; // 'all', 'work', 'education', or 'publications'
+
+            // Update the selectedSection state
+            selectedSection = section;
+
+            // Update button styles: Remove 'selected' from all, add to the clicked one(s)
             const sectionButtons = sectionFiltersContainer.querySelectorAll('.filter-section-btn');
+            sectionButtons.forEach(btn => {
+                btn.classList.remove('selected');
+            });
 
-            if (section === 'all') {
-                // If 'All' is clicked, clear selectedSections and add 'all' and all individual sections
-                selectedSections.clear();
-                selectedSections.add('all');
-                selectedSections.add('work');
-                selectedSections.add('education');
-                selectedSections.add('publications');
-
-                // Update button styles
-                sectionButtons.forEach(btn => {
-                    btn.classList.remove('selected');
-                    if (btn.dataset.section === 'all') {
-                        btn.classList.add('selected');
-                    }
-                });
+            // Add 'selected' class based on the new state
+            if (selectedSection === 'all') {
+                 sectionFiltersContainer.querySelector('[data-section="all"]').classList.add('selected');
             } else {
-                // If an individual section is clicked
-                if (selectedSections.has('all')) {
-                    // If 'All' was previously selected, clear and select only the clicked one
-                    selectedSections.clear();
-                    selectedSections.add(section);
-                    // Update button styles: deselect 'All', select the clicked one
-                    sectionButtons.forEach(btn => {
-                         btn.classList.remove('selected');
-                         if (btn.dataset.section === section) {
-                             btn.classList.add('selected');
-                         }
-                    });
-                } else {
-                    // If other individual sections were selected, toggle the clicked one
-                    if (selectedSections.has(section)) {
-                        selectedSections.delete(section);
-                        button.classList.remove('selected');
-                    } else {
-                        selectedSections.add(section);
-                        button.classList.add('selected');
-                    }
-
-                    // If after toggling, no individual sections are selected, revert to 'All'
-                    if (selectedSections.size === 0) {
-                         selectedSections.add('all');
-                         selectedSections.add('work');
-                         selectedSections.add('education');
-                         selectedSections.add('publications');
-                         sectionFiltersContainer.querySelector('[data-section="all"]').classList.add('selected');
-                    }
-                }
+                 button.classList.add('selected');
             }
+
 
             // Render sections based on the new state
             renderSections();
-            // Re-render work experiences if applicable (this is handled within renderSections)
-            // renderExperiences(); // No need to call here, renderSections will handle it
+            // Update clear button state (only affects work filters)
             updateClearButtonState();
         }
 
 
         /**
          * Filters experiences based on the search term (case-insensitive) and selected tags (using OR logic).
+         * An experience is considered a match if its main details OR any of its projects match the filters.
          * @returns {object[]} An array of filtered experience objects.
          */
         function filterExperiences() {
             const lowerCaseSearchTerm = searchTerm.toLowerCase().trim();
 
             return experiences.filter(exp => {
-                // TAGS MATCH (OR Logic): Check if the experience has AT LEAST ONE of the selected tags.
-                // If no tags are selected, this condition is true.
-                const tagsMatch = selectedTags.size === 0 ||
-                                 [...selectedTags].some(tag => exp.tags.map(t => t.toLowerCase()).includes(tag.toLowerCase())); // Case-insensitive tag matching
+                // Check if the main experience details match the search term or selected tags
+                const mainDetailsMatch = (lowerCaseSearchTerm === '' ||
+                                         exp.title.toLowerCase().includes(lowerCaseSearchTerm) ||
+                                         exp.company.toLowerCase().includes(lowerCaseSearchTerm) ||
+                                         exp.description.toLowerCase().includes(lowerCaseSearchTerm)) &&
+                                         (selectedTags.size === 0 ||
+                                         [...selectedTags].some(tag => exp.tags.map(t => t.toLowerCase()).includes(tag.toLowerCase())));
 
-                // SEARCH MATCH: Check if the search term matches title, company, or description (case-insensitive).
-                // If no search term is entered, this condition is true.
-                const searchMatch = lowerCaseSearchTerm === '' ||
-                                     exp.title.toLowerCase().includes(lowerCaseSearchTerm) ||
-                                     exp.company.toLowerCase().includes(lowerCaseSearchTerm) ||
-                                     exp.description.toLowerCase().includes(lowerCaseSearchTerm);
+                // Check if any projects within the experience match the search term or selected tags
+                const projectsMatch = exp.projects && exp.projects.some(project => {
+                    const projectSearchMatch = lowerCaseSearchTerm === '' ||
+                                               project.title.toLowerCase().includes(lowerCaseSearchTerm) ||
+                                               project.description.toLowerCase().includes(lowerCaseSearchTerm);
 
-                // Experience must match the search term AND satisfy the OR logic for tags.
-                return tagsMatch && searchMatch;
+                    const projectTagsMatch = selectedTags.size === 0 ||
+                                             (project.tags && [...selectedTags].some(tag => project.tags.map(t => t.toLowerCase()).includes(tag.toLowerCase())));
+
+                    return projectSearchMatch && projectTagsMatch;
+                });
+
+                // The experience is included if its main details match OR if any of its projects match
+                return mainDetailsMatch || projectsMatch;
             });
         }
 
         /**
-         * Renders the filtered work experiences into the experience list container.
+         * Renders the filtered work experiences and their matching projects into the experience list container.
          * Handles the display of the "no results" message.
          * This function only affects the content *within* the work experience section.
          */
         function renderExperiences() {
-             // Only render work experiences if the work section is selected
-             if (!selectedSections.has('work')) {
-                 // If work section is not selected, clear the list and hide no results message
-                 experienceListContainer.innerHTML = '';
-                 noResultsMessage.classList.add('hidden');
-                 // Also hide the work experience filter controls
+             // This function is only responsible for the list *content*
+             // The visibility of the section header/container is handled by renderSections()
+
+             // Clear previous list content
+             experienceListContainer.innerHTML = '';
+
+             // If the work section is not currently visible, hide the filters and exit
+             if (selectedSection !== 'work' && selectedSection !== 'all') {
                  workExperienceFiltersContainer.classList.add('hidden');
-                 return; // Exit the function early
+                 noResultsMessage.classList.add('hidden'); // Hide no results message if section is hidden
+                 return;
              }
 
-             // If work section *is* selected, show the filter controls
+             // If the work section is visible, ensure filters are shown
              workExperienceFiltersContainer.classList.remove('hidden');
 
 
-            const filtered = filterExperiences();
-            experienceListContainer.innerHTML = ''; // Clear previous list
+             const filteredExperiences = filterExperiences(); // Get experiences where either the main entry or a project matches
 
-            // Toggle visibility of the "no results" message
-            noResultsMessage.classList.toggle('hidden', filtered.length > 0);
+             if (filteredExperiences.length === 0) {
+                 // If no experiences or projects match the filters at all
+                 noResultsMessage.classList.remove('hidden');
+             } else {
+                 noResultsMessage.classList.add('hidden'); // Hide no results message if there are results
 
-            if (filtered.length > 0) {
-                filtered.forEach(exp => {
-                    const div = document.createElement('div');
-                    // Styling for each experience item
-                    div.className = 'experience-item border-l-4 border-indigo-500 pl-4 mb-6'; // mb-6 moved here
+                 filteredExperiences.forEach(exp => {
+                     const div = document.createElement('div');
+                     // Styling for each experience item
+                     div.className = 'experience-item border-l-4 border-indigo-500 pl-4 mb-6';
 
-                    // Header: Title and Years
-                    const header = document.createElement('div');
-                    header.className = 'flex flex-col sm:flex-row justify-between items-start mb-1'; // Responsive layout
-                    header.innerHTML = `
-                        <h3 class="text-xl font-semibold text-gray-900 mb-1 sm:mb-0">${exp.title}</h3>
-                        <span class="text-sm text-gray-500 whitespace-nowrap sm:ml-4">${exp.years}</span>
-                    `;
-                    div.appendChild(header);
+                     // Header: Title and Years
+                     const header = document.createElement('div');
+                     header.className = 'flex flex-col sm:flex-row justify-between items-start mb-1'; // Responsive layout
+                     header.innerHTML = `
+                         <h3 class="text-xl font-semibold text-gray-900 mb-1 sm:mb-0">${exp.title}</h3>
+                         <span class="text-sm text-gray-500 whitespace-nowrap sm:ml-4">${exp.years}</span>
+                     `;
+                     div.appendChild(header);
 
-                    // SubHeader: Company and Location
-                    const subHeader = document.createElement('div');
-                    subHeader.className = 'text-md font-medium text-indigo-700 mb-2';
-                    subHeader.textContent = `${exp.company}${exp.location ? ' | ' + exp.location : ''}`; // Only add location if available
-                    div.appendChild(subHeader);
+                     // SubHeader: Company and Location
+                     const subHeader = document.createElement('div');
+                     subHeader.className = 'text-md font-medium text-indigo-700 mb-2';
+                     subHeader.textContent = `${exp.company}${exp.location ? ' | ' + exp.location : ''}`; // Only add location if available
+                     div.appendChild(subHeader);
 
-                    // Description Paragraph
-                    const description = document.createElement('p');
-                    description.className = 'text-gray-600 mb-3';
-                    description.textContent = exp.description;
-                    div.appendChild(description);
+                     // Description Paragraph - Hide if any tag filters are selected
+                     if (selectedTags.size === 0) {
+                         const description = document.createElement('p');
+                         description.className = 'text-gray-600 mb-3';
+                         description.textContent = exp.description;
+                         div.appendChild(description);
+                     }
 
-                    // Tags Container
-                    const tagsDiv = document.createElement('div');
-                    tagsDiv.className = 'flex flex-wrap gap-2';
-                    exp.tags.forEach(tag => {
-                        const span = document.createElement('span');
-                        // Base styling for tags within experience items
-                        span.className = 'bg-gray-100 text-gray-600 text-xs font-medium px-2.5 py-0.5 rounded-full border border-gray-300';
-                        // Highlight tags if they are currently selected in the sidebar filters
-                        if (selectedTags.has(tag)) {
-                            span.classList.add('bg-indigo-100', 'text-indigo-800', 'border-indigo-300', 'font-semibold');
-                        }
-                        span.textContent = tag;
-                        tagsDiv.appendChild(span);
-                    });
-                    div.appendChild(tagsDiv);
 
-                    // Append the complete experience item div to the list container
-                    experienceListContainer.appendChild(div);
-                });
-            }
+                     // Tags Container for main experience
+                     const tagsDiv = document.createElement('div');
+                     tagsDiv.className = 'flex flex-wrap gap-2 mb-4'; // Added margin-bottom
+                     if (exp.tags) {
+                        exp.tags.forEach(tag => {
+                            const span = document.createElement('span');
+                            span.className = 'bg-gray-100 text-gray-600 text-xs font-medium px-2.5 py-0.5 rounded-full border border-gray-300';
+                            if (selectedTags.has(tag)) {
+                                span.classList.add('bg-indigo-100', 'text-indigo-800', 'border-indigo-300', 'font-semibold');
+                            }
+                            span.textContent = tag;
+                            tagsDiv.appendChild(span);
+                        });
+                     }
+                     div.appendChild(tagsDiv);
+
+
+                     // --- Render Projects ---
+                     if (exp.projects && exp.projects.length > 0) {
+                         const projectsContainer = document.createElement('div');
+                         projectsContainer.className = 'mt-4 pt-4 border-t border-gray-200 space-y-4'; // Styling for project section
+
+                         const projectsTitle = document.createElement('h4');
+                         projectsTitle.className = 'text-lg font-semibold text-gray-800';
+                         projectsTitle.textContent = 'Related Projects:';
+                         projectsContainer.appendChild(projectsTitle);
+
+                         // Filter projects based on current search term and selected tags
+                         const filteredProjects = exp.projects.filter(project => {
+                             const lowerCaseSearchTerm = searchTerm.toLowerCase().trim();
+
+                             // Project search match
+                             const projectSearchMatch = lowerCaseSearchTerm === '' ||
+                                                        project.title.toLowerCase().includes(lowerCaseSearchTerm) ||
+                                                        project.description.toLowerCase().includes(lowerCaseSearchTerm);
+
+                             // Project tag match (OR logic)
+                             const projectTagsMatch = selectedTags.size === 0 ||
+                                                      (project.tags && [...selectedTags].some(tag => project.tags.map(t => t.toLowerCase()).includes(tag.toLowerCase())));
+
+                             return projectSearchMatch && projectTagsMatch;
+                         });
+
+                         if (filteredProjects.length > 0) {
+                             filteredProjects.forEach(project => {
+                                 const projectDiv = document.createElement('div');
+                                 projectDiv.className = 'pl-4 border-l-2 border-blue-400'; // Styling for individual project
+
+                                 const projectHeader = document.createElement('div');
+                                 projectHeader.className = 'flex flex-col sm:flex-row justify-between items-start mb-1';
+                                 projectHeader.innerHTML = `
+                                     <h5 class="text-md font-semibold text-gray-800 mb-1 sm:mb-0">${project.title}</h5>
+                                 `;
+                                 projectDiv.appendChild(projectHeader);
+
+                                 const projectDescription = document.createElement('p');
+                                 projectDescription.className = 'text-gray-600 text-sm mb-2';
+                                 projectDescription.textContent = project.description;
+                                 projectDiv.appendChild(projectDescription);
+
+                                 const projectTagsDiv = document.createElement('div');
+                                 projectTagsDiv.className = 'flex flex-wrap gap-1';
+                                 if (project.tags) {
+                                     project.tags.forEach(tag => {
+                                         const span = document.createElement('span');
+                                         span.className = 'bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded-full';
+                                          // Highlight project tags if they are currently selected in the sidebar filters
+                                          if (selectedTags.has(tag)) {
+                                              span.classList.add('bg-indigo-100', 'text-indigo-800', 'border-indigo-300', 'font-semibold');
+                                          }
+                                         span.textContent = tag;
+                                         projectTagsDiv.appendChild(span);
+                                     });
+                                 }
+                                 projectDiv.appendChild(projectTagsDiv);
+
+                                 projectsContainer.appendChild(projectDiv);
+                             });
+                              div.appendChild(projectsContainer); // Append projects container to the main experience div
+
+                         } else {
+                              // Show a message if the job experience is shown but has no matching projects
+                              const noProjectsMessage = document.createElement('p');
+                              noProjectsMessage.className = 'text-gray-500 text-sm italic';
+                              noProjectsMessage.textContent = 'No projects under this experience match the filters.';
+                              projectsContainer.appendChild(noProjectsMessage);
+                              div.appendChild(projectsContainer); // Append projects container even if empty
+                         }
+                     } // End of Render Projects
+
+                     // Append the complete experience item div to the list container
+                     experienceListContainer.appendChild(div);
+                 });
+             }
         }
 
         /**
-         * Renders the main content sections based on the selectedSections state.
+         * Renders the main content sections based on the selectedSection state.
          * This function shows/hides the entire Work, Education, and Publications sections.
          */
         function renderSections() {
@@ -491,18 +615,31 @@
              educationSection.classList.add('hidden');
              publicationsSection.classList.add('hidden');
 
-             // Show sections that are in the selectedSections set
-             if (selectedSections.has('work')) {
-                 workExperienceSection.classList.remove('hidden');
-                 renderExperiences(); // Re-render work experiences if the section is shown
+             // Hide/show work experience filters based on selectedSection
+             if (selectedSection === 'work' || selectedSection === 'all') {
+                 workExperienceFiltersContainer.classList.remove('hidden');
              } else {
-                 // If work section is hidden, ensure work experience filters are also hidden
                  workExperienceFiltersContainer.classList.add('hidden');
              }
-             if (selectedSections.has('education')) {
+
+
+             // Show the selected section(s)
+             if (selectedSection === 'all') {
+                 workExperienceSection.classList.remove('hidden');
                  educationSection.classList.remove('hidden');
-             }
-             if (selectedSections.has('publications')) {
+                 publicationsSection.classList.remove('hidden');
+                 // When 'All' is selected, make sure work experiences are rendered based on their filters
+                 renderExperiences();
+
+             } else if (selectedSection === 'work') {
+                 workExperienceSection.classList.remove('hidden');
+                 // When 'Work' is selected, render experiences based on their filters
+                 renderExperiences();
+
+             } else if (selectedSection === 'education') {
+                 educationSection.classList.remove('hidden');
+
+             } else if (selectedSection === 'publications') {
                  publicationsSection.classList.remove('hidden');
              }
         }
@@ -510,7 +647,7 @@
 
         /**
          * Updates the enabled/disabled state and appearance of the 'Clear Filters' button
-         * based on whether any filters (search or tags) are active.
+         * based on whether any work experience filters (search or tags) are active.
          */
          function updateClearButtonState() {
              // The "Clear Work Filters" button is enabled if there is a search term OR selected tags
@@ -545,34 +682,19 @@
              updateClearButtonState();
          }
 
-         /**
-          * Resets ALL filters: section filters to 'All', and clears work experience search/tags.
-          */
-         function clearAllFilters() {
-             // Simulate clicking the 'All' section filter button
-             const allSectionButton = sectionFiltersContainer.querySelector('[data-section="all"]');
-             if (allSectionButton) {
-                 handleSectionClick({ target: allSectionButton });
-             }
-
-             // Clear work experience filters
-             clearWorkFilters();
-
-             // Update the clear button state (which should now be disabled)
-             updateClearButtonState();
-         }
-
-
         // --- Event Listeners ---
         // Listen for input in the search bar to filter dynamically
         searchInput.addEventListener('input', (event) => {
             searchTerm = event.target.value; // Update search term state
-            renderExperiences(); // Re-render the experience list (only if work section is visible)
+             // Only re-render work experiences if the work section is currently visible
+             if (selectedSection === 'work' || selectedSection === 'all') {
+                renderExperiences();
+             }
             updateClearButtonState(); // Update clear button status
         });
 
         // Listen for clicks on the 'Clear Work Filters' button
-        clearFiltersBtn.addEventListener('click', clearWorkFilters); // Modified to call clearWorkFilters
+        clearFiltersBtn.addEventListener('click', clearWorkFilters);
 
         // Listen for clicks on the section filter buttons
         sectionFiltersContainer.querySelectorAll('.filter-section-btn').forEach(button => {
@@ -585,7 +707,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderTagFilters(); // Populate tag filter buttons based on data
             // Initial rendering: Show all sections and render experiences within the work section
-            renderSections();
+            // Ensure 'All' button is selected initially in HTML
+            renderSections(); // Render the initial state based on selectedSection ('all' by default)
             updateClearButtonState(); // Set the initial state of the work clear button
         });
 
