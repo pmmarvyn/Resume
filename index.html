@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Resume - Jane Doe</title>
+    <title>Interactive Resume - Phillip Marvyn</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
@@ -17,8 +17,16 @@
             transition: all 0.2s ease-in-out;
         }
         .filter-tag.selected {
+            /* Existing styles for selected tags */
             transform: scale(1.05);
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        /* Style for selected section filters */
+        .filter-section-btn.selected {
+             background-color: #4f46e5; /* indigo-600 */
+             color: white;
+             border-color: #a5b4fc; /* indigo-300 */
+             font-weight: 600; /* semibold */
         }
         /* Simple animation for experience items */
         .experience-item {
@@ -28,6 +36,30 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        /* Style for publication list */
+        .publication-list li {
+            margin-bottom: 0.75rem; /* Add space between publications */
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .publication-list li::before {
+            content: "\f0f6"; /* Font Awesome document icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 0.1em; /* Adjust vertical alignment */
+            color: #4f46e5; /* Indigo */
+        }
+
+        /* Sticky sidebar styling */
+        .sticky-sidebar {
+            position: sticky;
+            top: 1rem; /* Adjust based on desired spacing from top */
+            max-height: calc(100vh - 2rem); /* Max height of the sidebar, accounting for top/bottom padding */
+            overflow-y: auto; /* Add scroll if content exceeds max height */
+        }
+
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,65 +69,132 @@
 
     <div class="container mx-auto p-4 md:p-8">
         <header class="text-center mb-8 md:mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold text-indigo-600 mb-2">Jane Doe</h1>
-            <p class="text-xl text-gray-600">Software Engineer | Web Developer | Tech Enthusiast</p>
+            <h1 class="text-4xl md:text-5xl font-bold text-indigo-600 mb-2">Phillip Marvyn</h1>
+            <p class="text-xl text-gray-600">Data Engineer</p>
             <div class="mt-4 space-x-4">
-                <a href="#" class="text-indigo-500 hover:text-indigo-700"><i class="fas fa-envelope"></i> Email</a>
-                <a href="#" class="text-indigo-500 hover:text-indigo-700"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                <a href="#" class="text-indigo-500 hover:text-indigo-700"><i class="fab fa-github"></i> GitHub</a>
-            </div>
+                <a href="tel:+15198028108" class="text-indigo-500 hover:text-indigo-700"><i class="fas fa-phone"></i> +1 519-802-8108</a>
+                <a href="mailto:pmmarvyn@gmail.com" class="text-indigo-500 hover:text-indigo-700"><i class="fas fa-envelope"></i> pmmarvyn@gmail.com</a>
+                </div>
         </header>
 
         <section class="bg-white p-6 rounded-lg shadow-md mb-8">
-            <h2 class="text-2xl font-semibold mb-4 border-b pb-3 text-indigo-600">Summary</h2>
+            <h2 class="text-2xl font-semibold mb-4 border-b pb-3 text-indigo-600">Profile</h2>
             <p class="text-gray-700 leading-relaxed">
-                Highly motivated and results-oriented Software Engineer with 5+ years of experience in designing, developing, and deploying web applications. Proven ability to lead projects, mentor junior developers, and collaborate effectively in fast-paced environments. Passionate about clean code, user experience, and leveraging technology to solve complex problems. Seeking challenging opportunities to contribute technical expertise and drive innovation.
-                </p>
+                Data Guru specializing in Python with a background in quantitative science. I'm passionate about new technologies, machine learning, AI and human health. Seeking opportunities to further my career in Data Engineering.
+            </p>
         </section>
         <div class="flex flex-col md:flex-row gap-8">
 
             <aside class="w-full md:w-1/4 lg:w-1/5">
-                <div class="bg-white p-4 rounded-lg shadow-md sticky top-4">
-                    <h2 class="text-xl font-semibold mb-4 border-b pb-2">Filter Experiences</h2>
+                <div class="bg-white p-4 rounded-lg shadow-md sticky-sidebar">
+                    <h2 class="text-xl font-semibold mb-4 border-b pb-2">Filters</h2>
 
                     <div class="mb-6">
-                        <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
-                        <input type="text" id="search-input" placeholder="Search keywords..." class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                         <h3 class="text-lg font-medium text-gray-800 mb-3">Show Sections</h3>
+                         <div id="section-filters" class="flex flex-wrap gap-2">
+                             <button class="filter-section-btn bg-gray-200 text-gray-700 text-sm font-medium px-3 py-1 rounded-full hover:bg-indigo-100 hover:text-indigo-800 selected" data-section="all">All</button>
+                             <button class="filter-section-btn bg-gray-200 text-gray-700 text-sm font-medium px-3 py-1 rounded-full hover:bg-indigo-100 hover:text-indigo-800" data-section="work">Work</button>
+                             <button class="filter-section-btn bg-gray-200 text-gray-700 text-sm font-medium px-3 py-1 rounded-full hover:bg-indigo-100 hover:text-indigo-800" data-section="education">Education</button>
+                             <button class="filter-section-btn bg-gray-200 text-gray-700 text-sm font-medium px-3 py-1 rounded-full hover:bg-indigo-100 hover:text-indigo-800" data-section="publications">Publications</button>
+                         </div>
                     </div>
 
-                    <div>
-                        <h3 class="text-lg font-medium text-gray-800 mb-3">Filter by Tag (OR logic)</h3>
-                        <div id="tag-filters" class="flex flex-wrap gap-2">
-                            <span class="text-gray-500 text-sm">Loading tags...</span>
+                    <div id="work-experience-filters"> <div class="mb-6">
+                            <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">Search Work Experience</label>
+                            <input type="text" id="search-input" placeholder="Search keywords..." class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
                         </div>
-                         <button id="clear-filters-btn" class="mt-4 text-sm text-indigo-600 hover:text-indigo-800 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Clear Filters</button>
+
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-800 mb-3">Filter Work Experience by Tag (OR logic)</h3>
+                            <div id="tag-filters" class="flex flex-wrap gap-2">
+                                <span class="text-gray-500 text-sm">Loading tags...</span>
+                            </div>
+                             <button id="clear-filters-btn" class="mt-4 text-sm text-indigo-600 hover:text-indigo-800 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Clear Work Filters</button>
+                        </div>
                     </div>
                 </div>
             </aside>
 
             <main class="w-full md:w-3/4 lg:w-4/5">
-                <section id="experience-section" class="bg-white p-6 rounded-lg shadow-md">
+                <section id="work-experience-section" class="bg-white p-6 rounded-lg shadow-md mb-8">
                     <h2 class="text-2xl font-semibold mb-6 border-b pb-3 text-indigo-600">Work Experience</h2>
                     <div id="experience-list" class="space-y-6">
-                        <p id="no-results-message" class="text-center text-gray-500 hidden">No experiences match the current filters.</p>
+                        <p id="no-results-message" class="text-center text-gray-500 hidden">No work experiences match the current filters.</p>
                     </div>
                 </section>
 
-                <section class="bg-white p-6 rounded-lg shadow-md mt-8">
+                <section id="education-section" class="bg-white p-6 rounded-lg shadow-md mb-8">
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-3 text-indigo-600">Education</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">PhD – Biochemistry/CAR-T cells</h3>
+                            <p class="text-md text-indigo-700">McMaster University</p>
+                            <p class="text-sm text-gray-500">2016 - 2021</p>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">MSc - Lipid Metabolism</h3>
+                            <p class="text-md text-indigo-700">University of Waterloo</p>
+                            <p class="text-sm text-gray-500">2013 - 2015</p>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">BSc - Kinesiology</h3>
+                            <p class="text-md text-indigo-700">University of Waterloo</p>
+                            <p class="text-sm text-gray-500">2008 - 2012</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-white p-6 rounded-lg shadow-md mb-8">
                     <h2 class="text-2xl font-semibold mb-4 border-b pb-3 text-indigo-600">Skills</h2>
                     <div class="flex flex-wrap gap-2">
-                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">JavaScript</span>
-                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">React</span>
-                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Node.js</span>
-                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">HTML</span>
-                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">CSS</span>
-                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Tailwind CSS</span>
                         <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Python</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Data Analysis</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Data Engineering</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">LLM</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">OpenAI API</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Prompt Engineering</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Automation</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Web Scraping</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Data Cleaning</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Data Quality</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Database Design</span>
                         <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">SQL</span>
-                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Git</span>
-                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Docker</span>
-                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Agile</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Google Colab</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Google Sheets API</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Chrome Extensions</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Jinja2</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Leadership</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Mentorship</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Management</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Hiring & Training</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Data Governance</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Scientific Research</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Biochemistry</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Healthcare</span>
+                        </div>
+                </section>
+
+                <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-3 text-indigo-600">Interests</h2>
+                    <div class="flex flex-wrap gap-2">
+                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">Mentoring/Teaching</span>
+                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">LLM Technologies</span>
+                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">Bioinformatics</span>
+                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">Single cell RNA Seq</span>
+                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">Proteomics</span>
+                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">3D Modeling/Printing</span>
+                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">Hiking</span>
+                         <span class="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">Camping</span>
                     </div>
+                </section>
+
+                <section id="publications-section" class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-3 text-indigo-600">Selected Publications & Patents</h2>
+                    <ul class="list-none publication-list text-gray-700 leading-relaxed">
+                        <li>Marvyn PM, Bramson J. Chimeric costimulatory receptors and methods and uses thereof. International Patent Number WO2021051195A1. September 16, 2020.</li>
+                        <li>Fernandes MF, Aristizabal-Henao JJ, Marvyn PM, M’Hiri I, Wiens M, Hoang M, Sebastian M, Nachbar R, St-Pierre P, De Silva K, Wood GA, Joseph JW, Doucette CA; Marette A, Stark KD, Duncan RE. Renal tubule specific Atgl deletion links kidney fat metabolism to glucagon-like peptide 1 and insulin secretion independent of renal inflammation or lipotoxicity. Molecular Metabolism. January 24, 2024.</li>
+                        <li>Bradley RM, Mardian EB, Bloemberg D, Aristizabal Henao JJ, Mitchell AS, Marvyn PM, Moes KA, Stark KD, Quadrilatero J, Duncan RE. Mice Deficient in lysophosphatidic acid acyltransferase delta (Lpaatδ)/acylglycerophosphate acyltransferase 4 (Agpat4) Have Impaired Learning and Memory. Molecular Cell Biology. October 27, 2017.</li>
+                    </ul>
                 </section>
 
             </main>
@@ -104,63 +203,63 @@
 
     <script>
         // --- Resume Data ---
-        // Array of experience objects. Each object represents a job/role.
+        // Array of experience objects. Updated with Phillip Marvyn's data.
         const experiences = [
             {
-                title: 'Senior Software Engineer',
-                company: 'Tech Solutions Inc.',
-                location: 'San Francisco, CA',
-                years: '2021 - Present',
-                description: 'Led the development of a new customer portal using React and Node.js. Mentored junior engineers and improved code quality through pair programming and code reviews. Implemented CI/CD pipelines using Jenkins and Docker.',
-                tags: ['React', 'Node.js', 'JavaScript', 'Leadership', 'CI/CD', 'Mentorship', 'Full-Stack']
+                title: 'Senior Data Manager @Zebricks', // Assuming @Zebricks is part of the title or a sub-team
+                company: 'Lumerate',
+                location: 'Hamilton, ON (Assumed)', // Added assumed location based on context
+                years: 'March 2025 – Present',
+                description: 'Led and mentored 4 data analysts, fostering a collaborative and high-performing environment. Defined team objectives, set performance expectations, and conducted regular performance reviews to ensure alignment with organizational goals. Recruited, onboarded, and trained new data team members, building a skilled and efficient workforce. Facilitated cross-functional collaboration with engineering, product, and business teams to ensure data-driven decision-making. Implemented best practices for data governance, quality, and documentation across the data team. Drove the adoption of new data technologies and methodologies to enhance data capabilities and efficiency.',
+                tags: ['Leadership', 'Mentorship', 'Management', 'Hiring', 'Training', 'Collaboration', 'Data Governance', 'Data Quality', 'Strategy', 'Team Building', 'Performance Management']
             },
             {
-                title: 'Software Engineer',
-                company: 'Web Innovations LLC',
-                location: 'Austin, TX',
-                years: '2018 - 2021',
-                description: 'Developed and maintained features for a large-scale e-commerce platform using Python (Django) and PostgreSQL. Collaborated with product managers and designers to translate requirements into technical solutions. Optimized database queries, improving application performance by 20%.',
-                tags: ['Python', 'Django', 'SQL', 'E-commerce', 'Backend', 'Performance Optimization']
+                title: 'Data Analyst',
+                company: 'Lumerate',
+                location: 'Hamilton, ON (Assumed)', // Added assumed location based on context
+                years: 'March 2023 – March 2025',
+                description: 'As the primary data specialist on a new development project, I mentored and supported new data team members, providing guidance and feedback on their projects. Developed semi-automated Python scripts for news publishing, integrating third-party software, Google Sheets, and internal tools. Reduced task time 80%, from 80 hours/week to 10 hours/week. Developed and optimized LLM prompts for extracting data, summarizing key information, and classifying text, utilizing Jinja2 templates to streamline data input. Leveraged the OpenAI API for bulk processing of files, streamlining data extraction, generation, manipulation, and formatting. Took the initiative to identify and alleviate team member pain points by developing Chrome extensions to automate and streamline workflows, saving 30 minutes per day per team member. Developed Python scripts in Google Colab to extract and process data from multiple web sources, including handling and analyzing PDF documents. Performed data scraping, cleaning, and quality assurance to maintain a high-quality organizational database.',
+                tags: ['Python', 'Automation', 'Google Sheets API', 'LLM', 'Prompt Engineering', 'OpenAI API', 'Jinja2', 'Chrome Extension', 'Web Scraping', 'PDF Processing', 'Data Cleaning', 'Data Quality', 'Mentorship', 'Google Colab', 'Data Extraction', 'Data Manipulation']
             },
             {
-                title: 'Frontend Developer',
-                company: 'Creative Agency Co.',
-                location: 'Remote',
-                years: '2016 - 2018',
-                description: 'Built responsive and interactive user interfaces for client websites using HTML, CSS, and JavaScript (jQuery, Vue.js). Worked closely with designers to ensure pixel-perfect implementation of mockups. Improved website loading speed through image optimization and code splitting.',
-                tags: ['HTML', 'CSS', 'JavaScript', 'Vue.js', 'Frontend', 'UI/UX', 'Web Performance']
-            },
-             {
-                title: 'Junior Web Developer',
-                company: 'Startup Hub',
-                location: 'New York, NY',
-                years: '2015 - 2016',
-                description: 'Assisted senior developers in building and testing web applications. Gained experience with version control (Git) and agile methodologies. Focused on frontend tasks and bug fixing.',
-                tags: ['HTML', 'CSS', 'JavaScript', 'Git', 'Agile', 'Frontend', 'Entry-Level']
+                title: 'Data Analyst',
+                company: 'Alvea Bio',
+                location: 'Remote/Unknown', // Location not specified
+                years: 'Jan 2022 – Jan 2023',
+                description: 'Designed and implemented databases to support vaccine development efforts, enabling quick identification of vaccine formulations, dosing strategies, technologies, trial status, and regulatory approvals. Provided expert advice on scientific and technological developments in vaccine research. Conducted ad-hoc research on diverse topics, ranging from vaccine formulations to document submissions.',
+                tags: ['Database Design', 'SQL', 'Vaccine Development', 'Healthcare', 'Biotech', 'Research', 'Scientific Analysis', 'Data Management', 'Regulatory Affairs']
             }
-            // Add more experience objects here
         ];
 
         // --- DOM Elements ---
+        const workExperienceSection = document.getElementById('work-experience-section');
+        const educationSection = document.getElementById('education-section');
+        const publicationsSection = document.getElementById('publications-section');
         const searchInput = document.getElementById('search-input');
         const tagFiltersContainer = document.getElementById('tag-filters');
         const experienceListContainer = document.getElementById('experience-list');
         const noResultsMessage = document.getElementById('no-results-message');
         const clearFiltersBtn = document.getElementById('clear-filters-btn');
+        const sectionFiltersContainer = document.getElementById('section-filters');
+        const workExperienceFiltersContainer = document.getElementById('work-experience-filters'); // Container for search/tag filters
 
         // --- State ---
         let selectedTags = new Set(); // Use a Set for efficient add/delete/check
         let searchTerm = '';
+        // Initialize to show all sections
+        let selectedSections = new Set(['all', 'work', 'education', 'publications']);
+
 
         // --- Functions ---
 
         /**
          * Extracts unique tags from the experiences data.
-         * @returns {string[]} An array of unique tags.
+         * @returns {string[]} An array of unique tags, sorted alphabetically.
          */
         function getUniqueTags() {
-            const allTags = experiences.flatMap(exp => exp.tags); // Get all tags, including duplicates
-            return [...new Set(allTags)].sort(); // Remove duplicates and sort alphabetically
+            const allTags = experiences.flatMap(exp => exp.tags);
+            // Added case-insensitive sorting
+            return [...new Set(allTags)].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
         }
 
         /**
@@ -179,27 +278,36 @@
                 const tagButton = document.createElement('button');
                 tagButton.textContent = tag;
                 tagButton.dataset.tag = tag; // Store tag name in data attribute
+                // Added rounded-full for pill shape
                 tagButton.className = 'filter-tag bg-gray-200 text-gray-700 text-sm font-medium px-3 py-1 rounded-full hover:bg-indigo-100 hover:text-indigo-800';
+                // Add 'selected' class if this tag is currently in the selectedTags Set
+                if (selectedTags.has(tag)) {
+                     tagButton.classList.add('selected', 'bg-indigo-600', 'text-white', 'ring-2', 'ring-indigo-300');
+                     tagButton.classList.remove('bg-gray-200', 'text-gray-700');
+                }
                 tagButton.addEventListener('click', handleTagClick);
                 tagFiltersContainer.appendChild(tagButton);
             });
         }
 
         /**
-         * Handles clicking on a tag filter button.
+         * Handles clicking on a tag filter button. Toggles selection state and appearance.
          * @param {Event} event - The click event object.
          */
         function handleTagClick(event) {
             const button = event.target;
             const tag = button.dataset.tag;
 
+            // Toggle tag selection in the Set
             if (selectedTags.has(tag)) {
                 selectedTags.delete(tag);
-                button.classList.remove('selected', 'bg-indigo-600', 'text-white');
+                // Style for deselected tag
+                button.classList.remove('selected', 'bg-indigo-600', 'text-white', 'ring-2', 'ring-indigo-300');
                 button.classList.add('bg-gray-200', 'text-gray-700');
             } else {
                 selectedTags.add(tag);
-                button.classList.add('selected', 'bg-indigo-600', 'text-white');
+                // Style for selected tag
+                button.classList.add('selected', 'bg-indigo-600', 'text-white', 'ring-2', 'ring-indigo-300');
                 button.classList.remove('bg-gray-200', 'text-gray-700');
             }
             // Update the displayed experiences after tag selection changes
@@ -208,137 +316,277 @@
         }
 
         /**
-         * Filters experiences based on the search term and selected tags (using OR logic for tags).
+         * Handles clicking on a section filter button. Toggles section visibility.
+         * @param {Event} event - The click event object.
+         */
+        function handleSectionClick(event) {
+            const button = event.target;
+            const section = button.dataset.section;
+            const sectionButtons = sectionFiltersContainer.querySelectorAll('.filter-section-btn');
+
+            if (section === 'all') {
+                // If 'All' is clicked, clear selectedSections and add 'all' and all individual sections
+                selectedSections.clear();
+                selectedSections.add('all');
+                selectedSections.add('work');
+                selectedSections.add('education');
+                selectedSections.add('publications');
+
+                // Update button styles
+                sectionButtons.forEach(btn => {
+                    btn.classList.remove('selected');
+                    if (btn.dataset.section === 'all') {
+                        btn.classList.add('selected');
+                    }
+                });
+            } else {
+                // If an individual section is clicked
+                if (selectedSections.has('all')) {
+                    // If 'All' was previously selected, clear and select only the clicked one
+                    selectedSections.clear();
+                    selectedSections.add(section);
+                    // Update button styles: deselect 'All', select the clicked one
+                    sectionButtons.forEach(btn => {
+                         btn.classList.remove('selected');
+                         if (btn.dataset.section === section) {
+                             btn.classList.add('selected');
+                         }
+                    });
+                } else {
+                    // If other individual sections were selected, toggle the clicked one
+                    if (selectedSections.has(section)) {
+                        selectedSections.delete(section);
+                        button.classList.remove('selected');
+                    } else {
+                        selectedSections.add(section);
+                        button.classList.add('selected');
+                    }
+
+                    // If after toggling, no individual sections are selected, revert to 'All'
+                    if (selectedSections.size === 0) {
+                         selectedSections.add('all');
+                         selectedSections.add('work');
+                         selectedSections.add('education');
+                         selectedSections.add('publications');
+                         sectionFiltersContainer.querySelector('[data-section="all"]').classList.add('selected');
+                    }
+                }
+            }
+
+            // Render sections based on the new state
+            renderSections();
+            // Re-render work experiences if applicable (this is handled within renderSections)
+            // renderExperiences(); // No need to call here, renderSections will handle it
+            updateClearButtonState();
+        }
+
+
+        /**
+         * Filters experiences based on the search term (case-insensitive) and selected tags (using OR logic).
          * @returns {object[]} An array of filtered experience objects.
          */
         function filterExperiences() {
             const lowerCaseSearchTerm = searchTerm.toLowerCase().trim();
 
             return experiences.filter(exp => {
-                // *** MODIFIED LOGIC FOR TAGS (OR) ***
-                // Check if the experience has AT LEAST ONE of the selected tags.
-                const tagsMatch = selectedTags.size === 0 || // No tags selected, so all pass
-                                  [...selectedTags].some(tag => exp.tags.includes(tag)); // Check if *any* selected tag is present
+                // TAGS MATCH (OR Logic): Check if the experience has AT LEAST ONE of the selected tags.
+                // If no tags are selected, this condition is true.
+                const tagsMatch = selectedTags.size === 0 ||
+                                 [...selectedTags].some(tag => exp.tags.map(t => t.toLowerCase()).includes(tag.toLowerCase())); // Case-insensitive tag matching
 
-                // Check if the search term matches title, company, or description
-                const searchMatch = lowerCaseSearchTerm === '' || // No search term, so all pass
-                                    exp.title.toLowerCase().includes(lowerCaseSearchTerm) ||
-                                    exp.company.toLowerCase().includes(lowerCaseSearchTerm) ||
-                                    exp.description.toLowerCase().includes(lowerCaseSearchTerm);
+                // SEARCH MATCH: Check if the search term matches title, company, or description (case-insensitive).
+                // If no search term is entered, this condition is true.
+                const searchMatch = lowerCaseSearchTerm === '' ||
+                                     exp.title.toLowerCase().includes(lowerCaseSearchTerm) ||
+                                     exp.company.toLowerCase().includes(lowerCaseSearchTerm) ||
+                                     exp.description.toLowerCase().includes(lowerCaseSearchTerm);
 
-                // Experience must match both tag filters (OR logic) and search term
+                // Experience must match the search term AND satisfy the OR logic for tags.
                 return tagsMatch && searchMatch;
             });
         }
 
         /**
-         * Renders the filtered experiences onto the page.
+         * Renders the filtered work experiences into the experience list container.
+         * Handles the display of the "no results" message.
+         * This function only affects the content *within* the work experience section.
          */
         function renderExperiences() {
+             // Only render work experiences if the work section is selected
+             if (!selectedSections.has('work')) {
+                 // If work section is not selected, clear the list and hide no results message
+                 experienceListContainer.innerHTML = '';
+                 noResultsMessage.classList.add('hidden');
+                 // Also hide the work experience filter controls
+                 workExperienceFiltersContainer.classList.add('hidden');
+                 return; // Exit the function early
+             }
+
+             // If work section *is* selected, show the filter controls
+             workExperienceFiltersContainer.classList.remove('hidden');
+
+
             const filtered = filterExperiences();
             experienceListContainer.innerHTML = ''; // Clear previous list
 
-            if (filtered.length === 0) {
-                noResultsMessage.classList.remove('hidden'); // Show 'no results' message
-            } else {
-                noResultsMessage.classList.add('hidden'); // Hide 'no results' message
+            // Toggle visibility of the "no results" message
+            noResultsMessage.classList.toggle('hidden', filtered.length > 0);
+
+            if (filtered.length > 0) {
                 filtered.forEach(exp => {
                     const div = document.createElement('div');
-                    div.className = 'experience-item border-l-4 border-indigo-500 pl-4 mb-6'; // Add left border for visual separation
+                    // Styling for each experience item
+                    div.className = 'experience-item border-l-4 border-indigo-500 pl-4 mb-6'; // mb-6 moved here
 
-                    // Title and Company
+                    // Header: Title and Years
                     const header = document.createElement('div');
-                    header.className = 'flex justify-between items-start mb-1';
+                    header.className = 'flex flex-col sm:flex-row justify-between items-start mb-1'; // Responsive layout
                     header.innerHTML = `
-                        <h3 class="text-xl font-semibold text-gray-900">${exp.title}</h3>
-                        <span class="text-sm text-gray-500 whitespace-nowrap ml-4">${exp.years}</span>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-1 sm:mb-0">${exp.title}</h3>
+                        <span class="text-sm text-gray-500 whitespace-nowrap sm:ml-4">${exp.years}</span>
                     `;
                     div.appendChild(header);
 
-                    // Company and Location
+                    // SubHeader: Company and Location
                     const subHeader = document.createElement('div');
                     subHeader.className = 'text-md font-medium text-indigo-700 mb-2';
-                    subHeader.textContent = `${exp.company} | ${exp.location}`;
+                    subHeader.textContent = `${exp.company}${exp.location ? ' | ' + exp.location : ''}`; // Only add location if available
                     div.appendChild(subHeader);
 
-                    // Description
+                    // Description Paragraph
                     const description = document.createElement('p');
                     description.className = 'text-gray-600 mb-3';
                     description.textContent = exp.description;
                     div.appendChild(description);
 
-                    // Tags
+                    // Tags Container
                     const tagsDiv = document.createElement('div');
                     tagsDiv.className = 'flex flex-wrap gap-2';
                     exp.tags.forEach(tag => {
                         const span = document.createElement('span');
+                        // Base styling for tags within experience items
                         span.className = 'bg-gray-100 text-gray-600 text-xs font-medium px-2.5 py-0.5 rounded-full border border-gray-300';
-                        // Highlight tags that are currently selected in filters
+                        // Highlight tags if they are currently selected in the sidebar filters
                         if (selectedTags.has(tag)) {
-                            span.classList.add('bg-indigo-100', 'text-indigo-800', 'border-indigo-300');
+                            span.classList.add('bg-indigo-100', 'text-indigo-800', 'border-indigo-300', 'font-semibold');
                         }
                         span.textContent = tag;
                         tagsDiv.appendChild(span);
                     });
                     div.appendChild(tagsDiv);
 
+                    // Append the complete experience item div to the list container
                     experienceListContainer.appendChild(div);
                 });
             }
-             // Ensure the container itself is visible if there are results
-            experienceListContainer.classList.toggle('hidden', filtered.length === 0);
         }
 
         /**
-         * Updates the enabled/disabled state of the 'Clear Filters' button.
+         * Renders the main content sections based on the selectedSections state.
+         * This function shows/hides the entire Work, Education, and Publications sections.
+         */
+        function renderSections() {
+             // Hide all sections initially
+             workExperienceSection.classList.add('hidden');
+             educationSection.classList.add('hidden');
+             publicationsSection.classList.add('hidden');
+
+             // Show sections that are in the selectedSections set
+             if (selectedSections.has('work')) {
+                 workExperienceSection.classList.remove('hidden');
+                 renderExperiences(); // Re-render work experiences if the section is shown
+             } else {
+                 // If work section is hidden, ensure work experience filters are also hidden
+                 workExperienceFiltersContainer.classList.add('hidden');
+             }
+             if (selectedSections.has('education')) {
+                 educationSection.classList.remove('hidden');
+             }
+             if (selectedSections.has('publications')) {
+                 publicationsSection.classList.remove('hidden');
+             }
+        }
+
+
+        /**
+         * Updates the enabled/disabled state and appearance of the 'Clear Filters' button
+         * based on whether any filters (search or tags) are active.
          */
          function updateClearButtonState() {
-            const hasActiveFilters = selectedTags.size > 0 || searchTerm.trim() !== '';
-            clearFiltersBtn.disabled = !hasActiveFilters;
+             // The "Clear Work Filters" button is enabled if there is a search term OR selected tags
+             const hasActiveWorkFilters = selectedTags.size > 0 || searchTerm.trim() !== '';
+             clearFiltersBtn.disabled = !hasActiveWorkFilters;
+             clearFiltersBtn.classList.toggle('opacity-50', !hasActiveWorkFilters);
+             clearFiltersBtn.classList.toggle('cursor-not-allowed', !hasActiveWorkFilters);
          }
 
         /**
-         * Clears all active filters (search term and selected tags).
+         * Clears the work experience search input, removes all selected tags,
+         * resets tag button styles, and re-renders the work experiences.
+         * Does NOT affect section filters.
          */
+         function clearWorkFilters() {
+             // Clear search input visually and in state
+             searchInput.value = '';
+             searchTerm = '';
+
+             // Clear selected tags state
+             selectedTags.clear();
+
+             // Reset tag button visual styles
+             const tagButtons = tagFiltersContainer.querySelectorAll('.filter-tag');
+             tagButtons.forEach(button => {
+                 button.classList.remove('selected', 'bg-indigo-600', 'text-white', 'ring-2', 'ring-indigo-300');
+                 button.classList.add('bg-gray-200', 'text-gray-700');
+             });
+
+             // Re-render experiences with no work filters and update button state
+             renderExperiences();
+             updateClearButtonState();
+         }
+
+         /**
+          * Resets ALL filters: section filters to 'All', and clears work experience search/tags.
+          */
          function clearAllFilters() {
-            // Clear search input
-            searchInput.value = '';
-            searchTerm = '';
+             // Simulate clicking the 'All' section filter button
+             const allSectionButton = sectionFiltersContainer.querySelector('[data-section="all"]');
+             if (allSectionButton) {
+                 handleSectionClick({ target: allSectionButton });
+             }
 
-            // Clear selected tags
-            selectedTags.clear();
+             // Clear work experience filters
+             clearWorkFilters();
 
-            // Reset tag button styles
-            const tagButtons = tagFiltersContainer.querySelectorAll('.filter-tag');
-            tagButtons.forEach(button => {
-                button.classList.remove('selected', 'bg-indigo-600', 'text-white');
-                button.classList.add('bg-gray-200', 'text-gray-700');
-            });
-
-            // Re-render experiences and update button state
-            renderExperiences();
-            updateClearButtonState();
+             // Update the clear button state (which should now be disabled)
+             updateClearButtonState();
          }
 
 
         // --- Event Listeners ---
-        // Update search term and re-render on input
+        // Listen for input in the search bar to filter dynamically
         searchInput.addEventListener('input', (event) => {
-            searchTerm = event.target.value;
-            renderExperiences();
-            updateClearButtonState();
+            searchTerm = event.target.value; // Update search term state
+            renderExperiences(); // Re-render the experience list (only if work section is visible)
+            updateClearButtonState(); // Update clear button status
         });
 
-        // Clear filters button listener
-        clearFiltersBtn.addEventListener('click', clearAllFilters);
+        // Listen for clicks on the 'Clear Work Filters' button
+        clearFiltersBtn.addEventListener('click', clearWorkFilters); // Modified to call clearWorkFilters
+
+        // Listen for clicks on the section filter buttons
+        sectionFiltersContainer.querySelectorAll('.filter-section-btn').forEach(button => {
+            button.addEventListener('click', handleSectionClick);
+        });
 
 
         // --- Initial Setup ---
-        // Run functions when the DOM is fully loaded
+        // Run these functions once the DOM is fully loaded and ready
         document.addEventListener('DOMContentLoaded', () => {
-            renderTagFilters(); // Create the tag filter buttons
-            renderExperiences(); // Display initial list of experiences
-            updateClearButtonState(); // Set initial state of clear button
+            renderTagFilters(); // Populate tag filter buttons based on data
+            // Initial rendering: Show all sections and render experiences within the work section
+            renderSections();
+            updateClearButtonState(); // Set the initial state of the work clear button
         });
 
     </script>
