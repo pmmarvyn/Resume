@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Resume - Jane Doe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font */
+        }
+        /* Style for filter tags */
+        .filter-tag {
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .filter-tag.selected {
+            transform: scale(1.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        /* Simple animation for experience items */
+        .experience-item {
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-indigo-600 mb-2">Jane Doe</h1>
+            <p class="text-xl text-gray-600">Software Engineer | Web Developer | Tech Enthusiast</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="text-indigo-500 hover:text-indigo-700"><i class="fas fa-envelope"></i> Email</a>
+                <a href="#" class="text-indigo-500 hover:text-indigo-700"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="#" class="text-indigo-500 hover:text-indigo-700"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </header>
+
+        <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-2xl font-semibold mb-4 border-b pb-3 text-indigo-600">Summary</h2>
+            <p class="text-gray-700 leading-relaxed">
+                Highly motivated and results-oriented Software Engineer with 5+ years of experience in designing, developing, and deploying web applications. Proven ability to lead projects, mentor junior developers, and collaborate effectively in fast-paced environments. Passionate about clean code, user experience, and leveraging technology to solve complex problems. Seeking challenging opportunities to contribute technical expertise and drive innovation.
+                </p>
+        </section>
+        <div class="flex flex-col md:flex-row gap-8">
+
+            <aside class="w-full md:w-1/4 lg:w-1/5">
+                <div class="bg-white p-4 rounded-lg shadow-md sticky top-4">
+                    <h2 class="text-xl font-semibold mb-4 border-b pb-2">Filter Experiences</h2>
+
+                    <div class="mb-6">
+                        <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                        <input type="text" id="search-input" placeholder="Search keywords..." class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-800 mb-3">Filter by Tag (OR logic)</h3>
+                        <div id="tag-filters" class="flex flex-wrap gap-2">
+                            <span class="text-gray-500 text-sm">Loading tags...</span>
+                        </div>
+                         <button id="clear-filters-btn" class="mt-4 text-sm text-indigo-600 hover:text-indigo-800 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Clear Filters</button>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="w-full md:w-3/4 lg:w-4/5">
+                <section id="experience-section" class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-semibold mb-6 border-b pb-3 text-indigo-600">Work Experience</h2>
+                    <div id="experience-list" class="space-y-6">
+                        <p id="no-results-message" class="text-center text-gray-500 hidden">No experiences match the current filters.</p>
+                    </div>
+                </section>
+
+                <section class="bg-white p-6 rounded-lg shadow-md mt-8">
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-3 text-indigo-600">Skills</h2>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">JavaScript</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">React</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Node.js</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">HTML</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">CSS</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Tailwind CSS</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Python</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">SQL</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Git</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Docker</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Agile</span>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // --- Resume Data ---
+        // Array of experience objects. Each object represents a job/role.
+        const experiences = [
+            {
+                title: 'Senior Software Engineer',
+                company: 'Tech Solutions Inc.',
+                location: 'San Francisco, CA',
+                years: '2021 - Present',
+                description: 'Led the development of a new customer portal using React and Node.js. Mentored junior engineers and improved code quality through pair programming and code reviews. Implemented CI/CD pipelines using Jenkins and Docker.',
+                tags: ['React', 'Node.js', 'JavaScript', 'Leadership', 'CI/CD', 'Mentorship', 'Full-Stack']
+            },
+            {
+                title: 'Software Engineer',
+                company: 'Web Innovations LLC',
+                location: 'Austin, TX',
+                years: '2018 - 2021',
+                description: 'Developed and maintained features for a large-scale e-commerce platform using Python (Django) and PostgreSQL. Collaborated with product managers and designers to translate requirements into technical solutions. Optimized database queries, improving application performance by 20%.',
+                tags: ['Python', 'Django', 'SQL', 'E-commerce', 'Backend', 'Performance Optimization']
+            },
+            {
+                title: 'Frontend Developer',
+                company: 'Creative Agency Co.',
+                location: 'Remote',
+                years: '2016 - 2018',
+                description: 'Built responsive and interactive user interfaces for client websites using HTML, CSS, and JavaScript (jQuery, Vue.js). Worked closely with designers to ensure pixel-perfect implementation of mockups. Improved website loading speed through image optimization and code splitting.',
+                tags: ['HTML', 'CSS', 'JavaScript', 'Vue.js', 'Frontend', 'UI/UX', 'Web Performance']
+            },
+             {
+                title: 'Junior Web Developer',
+                company: 'Startup Hub',
+                location: 'New York, NY',
+                years: '2015 - 2016',
+                description: 'Assisted senior developers in building and testing web applications. Gained experience with version control (Git) and agile methodologies. Focused on frontend tasks and bug fixing.',
+                tags: ['HTML', 'CSS', 'JavaScript', 'Git', 'Agile', 'Frontend', 'Entry-Level']
+            }
+            // Add more experience objects here
+        ];
+
+        // --- DOM Elements ---
+        const searchInput = document.getElementById('search-input');
+        const tagFiltersContainer = document.getElementById('tag-filters');
+        const experienceListContainer = document.getElementById('experience-list');
+        const noResultsMessage = document.getElementById('no-results-message');
+        const clearFiltersBtn = document.getElementById('clear-filters-btn');
+
+        // --- State ---
+        let selectedTags = new Set(); // Use a Set for efficient add/delete/check
+        let searchTerm = '';
+
+        // --- Functions ---
+
+        /**
+         * Extracts unique tags from the experiences data.
+         * @returns {string[]} An array of unique tags.
+         */
+        function getUniqueTags() {
+            const allTags = experiences.flatMap(exp => exp.tags); // Get all tags, including duplicates
+            return [...new Set(allTags)].sort(); // Remove duplicates and sort alphabetically
+        }
+
+        /**
+         * Renders the filter tag buttons in the sidebar.
+         */
+        function renderTagFilters() {
+            const uniqueTags = getUniqueTags();
+            tagFiltersContainer.innerHTML = ''; // Clear loading message or previous tags
+
+            if (uniqueTags.length === 0) {
+                 tagFiltersContainer.innerHTML = '<span class="text-gray-500 text-sm">No tags available.</span>';
+                 return;
+            }
+
+            uniqueTags.forEach(tag => {
+                const tagButton = document.createElement('button');
+                tagButton.textContent = tag;
+                tagButton.dataset.tag = tag; // Store tag name in data attribute
+                tagButton.className = 'filter-tag bg-gray-200 text-gray-700 text-sm font-medium px-3 py-1 rounded-full hover:bg-indigo-100 hover:text-indigo-800';
+                tagButton.addEventListener('click', handleTagClick);
+                tagFiltersContainer.appendChild(tagButton);
+            });
+        }
+
+        /**
+         * Handles clicking on a tag filter button.
+         * @param {Event} event - The click event object.
+         */
+        function handleTagClick(event) {
+            const button = event.target;
+            const tag = button.dataset.tag;
+
+            if (selectedTags.has(tag)) {
+                selectedTags.delete(tag);
+                button.classList.remove('selected', 'bg-indigo-600', 'text-white');
+                button.classList.add('bg-gray-200', 'text-gray-700');
+            } else {
+                selectedTags.add(tag);
+                button.classList.add('selected', 'bg-indigo-600', 'text-white');
+                button.classList.remove('bg-gray-200', 'text-gray-700');
+            }
+            // Update the displayed experiences after tag selection changes
+            renderExperiences();
+            updateClearButtonState();
+        }
+
+        /**
+         * Filters experiences based on the search term and selected tags (using OR logic for tags).
+         * @returns {object[]} An array of filtered experience objects.
+         */
+        function filterExperiences() {
+            const lowerCaseSearchTerm = searchTerm.toLowerCase().trim();
+
+            return experiences.filter(exp => {
+                // *** MODIFIED LOGIC FOR TAGS (OR) ***
+                // Check if the experience has AT LEAST ONE of the selected tags.
+                const tagsMatch = selectedTags.size === 0 || // No tags selected, so all pass
+                                  [...selectedTags].some(tag => exp.tags.includes(tag)); // Check if *any* selected tag is present
+
+                // Check if the search term matches title, company, or description
+                const searchMatch = lowerCaseSearchTerm === '' || // No search term, so all pass
+                                    exp.title.toLowerCase().includes(lowerCaseSearchTerm) ||
+                                    exp.company.toLowerCase().includes(lowerCaseSearchTerm) ||
+                                    exp.description.toLowerCase().includes(lowerCaseSearchTerm);
+
+                // Experience must match both tag filters (OR logic) and search term
+                return tagsMatch && searchMatch;
+            });
+        }
+
+        /**
+         * Renders the filtered experiences onto the page.
+         */
+        function renderExperiences() {
+            const filtered = filterExperiences();
+            experienceListContainer.innerHTML = ''; // Clear previous list
+
+            if (filtered.length === 0) {
+                noResultsMessage.classList.remove('hidden'); // Show 'no results' message
+            } else {
+                noResultsMessage.classList.add('hidden'); // Hide 'no results' message
+                filtered.forEach(exp => {
+                    const div = document.createElement('div');
+                    div.className = 'experience-item border-l-4 border-indigo-500 pl-4 mb-6'; // Add left border for visual separation
+
+                    // Title and Company
+                    const header = document.createElement('div');
+                    header.className = 'flex justify-between items-start mb-1';
+                    header.innerHTML = `
+                        <h3 class="text-xl font-semibold text-gray-900">${exp.title}</h3>
+                        <span class="text-sm text-gray-500 whitespace-nowrap ml-4">${exp.years}</span>
+                    `;
+                    div.appendChild(header);
+
+                    // Company and Location
+                    const subHeader = document.createElement('div');
+                    subHeader.className = 'text-md font-medium text-indigo-700 mb-2';
+                    subHeader.textContent = `${exp.company} | ${exp.location}`;
+                    div.appendChild(subHeader);
+
+                    // Description
+                    const description = document.createElement('p');
+                    description.className = 'text-gray-600 mb-3';
+                    description.textContent = exp.description;
+                    div.appendChild(description);
+
+                    // Tags
+                    const tagsDiv = document.createElement('div');
+                    tagsDiv.className = 'flex flex-wrap gap-2';
+                    exp.tags.forEach(tag => {
+                        const span = document.createElement('span');
+                        span.className = 'bg-gray-100 text-gray-600 text-xs font-medium px-2.5 py-0.5 rounded-full border border-gray-300';
+                        // Highlight tags that are currently selected in filters
+                        if (selectedTags.has(tag)) {
+                            span.classList.add('bg-indigo-100', 'text-indigo-800', 'border-indigo-300');
+                        }
+                        span.textContent = tag;
+                        tagsDiv.appendChild(span);
+                    });
+                    div.appendChild(tagsDiv);
+
+                    experienceListContainer.appendChild(div);
+                });
+            }
+             // Ensure the container itself is visible if there are results
+            experienceListContainer.classList.toggle('hidden', filtered.length === 0);
+        }
+
+        /**
+         * Updates the enabled/disabled state of the 'Clear Filters' button.
+         */
+         function updateClearButtonState() {
+            const hasActiveFilters = selectedTags.size > 0 || searchTerm.trim() !== '';
+            clearFiltersBtn.disabled = !hasActiveFilters;
+         }
+
+        /**
+         * Clears all active filters (search term and selected tags).
+         */
+         function clearAllFilters() {
+            // Clear search input
+            searchInput.value = '';
+            searchTerm = '';
+
+            // Clear selected tags
+            selectedTags.clear();
+
+            // Reset tag button styles
+            const tagButtons = tagFiltersContainer.querySelectorAll('.filter-tag');
+            tagButtons.forEach(button => {
+                button.classList.remove('selected', 'bg-indigo-600', 'text-white');
+                button.classList.add('bg-gray-200', 'text-gray-700');
+            });
+
+            // Re-render experiences and update button state
+            renderExperiences();
+            updateClearButtonState();
+         }
+
+
+        // --- Event Listeners ---
+        // Update search term and re-render on input
+        searchInput.addEventListener('input', (event) => {
+            searchTerm = event.target.value;
+            renderExperiences();
+            updateClearButtonState();
+        });
+
+        // Clear filters button listener
+        clearFiltersBtn.addEventListener('click', clearAllFilters);
+
+
+        // --- Initial Setup ---
+        // Run functions when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTagFilters(); // Create the tag filter buttons
+            renderExperiences(); // Display initial list of experiences
+            updateClearButtonState(); // Set initial state of clear button
+        });
+
+    </script>
+
+</body>
+</html>
